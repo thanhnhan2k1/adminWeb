@@ -20,7 +20,7 @@ import com.example.model.GeographicalArea;
 @RequestMapping("/area")
 public class AreaController {
 	private RestTemplate rest=new RestTemplate();
-	private String url="http://localhost:8082";
+	private String url="https://server2-production-29ab.up.railway.app/";
 	//private String url="https://da-server2-production.up.railway.app";
 	@GetMapping
 	private String get(@RequestParam(name="key",defaultValue = "", required = false)String key,
