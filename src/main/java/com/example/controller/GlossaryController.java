@@ -38,7 +38,7 @@ import com.example.model.Glossary;
 @RequestMapping("/glossary")
 public class GlossaryController {
 	private RestTemplate rest = new RestTemplate();
-	private String url = "http://localhost:8082";
+	private String url="https://server2-production-29ab.up.railway.app";
 
 	//private String url="https://da-server2-production.up.railway.app";
 	@GetMapping
