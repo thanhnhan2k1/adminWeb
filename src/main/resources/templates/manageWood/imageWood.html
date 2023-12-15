@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>SB Admin 2 - Dashboard</title>
+
+<!-- Custom fonts for this template-->
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/multiselect-dropdown.js}"></script>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<div th:replace="sidebar :: fsidebar"></div>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<div th:replace="topbar :: ftopbar"></div>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<h4 class="mb-2 text-gray-800">
+						Loài gỗ
+						</h5>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/}">Loài gỗ</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Quản lý ảnh gỗ</li>
+							</ol>
+						</nav>
+							    
+								<div>
+									<div id="imageUploadContainer" >
+										<table class="table table-bordered" cellspacing="0" role="grid" style="width: 100%;">
+											<tr>
+												<th>Ảnh</th>
+												<th>Mô tả của ảnh</th>
+												<th>Hành động</th>
+											</tr>
+											<tr th:each="i, itr:${session.wood.listImage}">
+												<td><img th:src="${i.path}" style="width: 40%; height: 40%;"></td>
+												<td><p th:text="${i.nameImg}"></p></td>
+												<td>
+													<a th:href="@{'/wood/deleteImg?index='+${itr.index}}"><i class="fa-solid fa-trash"></i></a>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<form th:action="@{/wood/saveImg}" method="post" id="f2" enctype="multipart/form-data">
+								<div class="image-input">
+										<div id="images"></div>
+										<table class="table">
+											<tbody>
+												<tr>
+													<td>
+														<input type="file" id="file-input" name="image" accept="image/png, image/jpeg" onchange="preview()" required="required">
+														<label for="file-input"> <i class="fa-solid fa-upload"></i>
+															&nbsp; Chọn ảnh
+														</label>
+														<p id="num-of-files">Chọn 1 ảnh minh họa</p>
+												    </td>
+												    <td>
+														<input type="text" class="form-control" name="nameImage" placeholder="Nhập mô tả" required="required">
+													</td>
+													<td>
+														<button style="border-width: 2px; border-radius: 4px; background: #105378; border-color: #105378; margin-left: 10px; color: white;">Thêm</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+								</form>	
+							    </div>
+								
+								<script type="text/javascript">
+									function preview(){
+										let fileInput=document.getElementById("file-input");
+										let imageContainer=document.getElementById("images");
+										imageContainer.innerHTML="";
+										let reader=new FileReader();
+										let img = document.createElement("img");
+										img.style="width:20%; height:20%"
+										reader.onload=()=>{
+											img.setAttribute("src",reader.result);
+										}
+										imageContainer.appendChild(img);
+										reader.readAsDataURL(fileInput.files[0]);
+									}
+								</script>
+				</div>
+
+			</div>
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- End of Main Content -->
+
+		<!-- Footer -->
+		
+		<!-- End of Footer -->
+
+	</div>
+	<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+	<div th:if="${result=='fail'}">
+    	<script >
+    		alert("Cập nhật không thành công");
+    	</script>
+    </div>
+    <div th:if="${result=='success'}">
+    	<script >
+    		alert("Cập nhật thành công");
+    		var s="/wood";
+    		window.location.href=s;
+    	</script>
+    </div>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+</body>
+
+</html>
