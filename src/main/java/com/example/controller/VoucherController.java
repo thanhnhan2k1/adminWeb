@@ -22,7 +22,7 @@ import com.example.model.Voucher;
 @RequestMapping("/voucher")
 public class VoucherController {
 	private RestTemplate rest=new RestTemplate();
-	private String url="http://localhost:8082";
+	private String url="https://server2-production-29ab.up.railway.app";
 	//private String url="https://da-server2-production.up.railway.app";
 	@GetMapping
 	private String getListVoucher(HttpSession session) {
